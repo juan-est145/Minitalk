@@ -3,24 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main_s.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-est145 <juan-est145@student.42.fr>    +#+  +:+       +#+        */
+/*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/23 14:17:19 by juan-est145      ###   ########.fr       */
+/*   Updated: 2024/01/23 18:52:56 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _POSIX_SOURCE // Erase later in Mac
-
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+#include "minitalk.h"
 
 void	ft_stop(int signal)
 {
 	if (signal == SIGINT)
-		printf("Stop signal received");
+		printf("Stop signal received\n");
 }
 
 int	main(void)
@@ -28,10 +23,32 @@ int	main(void)
 	struct sigaction	sa;
 	int					result;
 
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGINT);
 	sa.sa_handler = &ft_stop;
 	sigaction(SIGINT, &sa, NULL);
 	result = getpid();
 	printf("%d\n", result);
-	pause();
+	while (1)
+	{
+		pause();
+		sigaction(SIGINT, &sa, NULL);
+	}
 	return (0);
 }
+
+//Everytime that the signal has been handled by a custom handler, 
+//the default handler is restored. 
+//In order to avoid this, we need to redifine later in the 
+//code the custom signal handler with sigaction.
+
+/*
+sigaction(SIGINT, &sa, NULL);
+	while (1)
+	{
+		pause();
+		sigaction(SIGINT, &sa, NULL);
+		//sleep(2);
+	}
+	return (0);
+}*/
