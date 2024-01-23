@@ -6,7 +6,7 @@
 /*   By: juan-est145 <juan-est145@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/23 14:04:19 by juan-est145      ###   ########.fr       */
+/*   Updated: 2024/01/23 14:17:19 by juan-est145      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void	ft_stop(void)
+void	ft_stop(int signal)
 {
-	printf("Stop signal received");
+	if (signal == SIGINT)
+		printf("Stop signal received");
 }
 
 int	main(void)
