@@ -6,11 +6,12 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/23 18:52:56 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/23 19:14:45 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+#include "libft/libft.h"
 
 void	ft_stop(int signal)
 {
