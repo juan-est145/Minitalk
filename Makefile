@@ -17,14 +17,15 @@ LIBRARY_FLAG = -Llibft -lft -o
 
 RM = rm -rf
 
-all: $(NAME) $(NAME_CLIENT)
+all: make-library $(NAME) $(NAME_CLIENT)
+
+make-library:
+	$(MAKE) -C $(LIBFT_PATH)
 
 $(NAME): $(OBJS_SERVER) $(HEADER)
-	$(MAKE) -C $(LIBFT_PATH)
 	$(COMPILER) $(FLAGS) $(LIBRARY_FLAG) $(NAME) $(OBJS_SERVER)
 
 $(NAME_CLIENT): $(OBJS_CLIENT) $(HEADER)
-	$(MAKE) -C $(LIBFT_PATH)
 	$(COMPILER) $(FLAGS) $(LIBRARY_FLAG) $(NAME_CLIENT) $(OBJS_CLIENT)
 
 clean:
