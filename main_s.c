@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/24 15:26:50 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:06:44 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	ft_stop(int signal)
 {
 	if (signal == SIGINT)
-		printf("Stop signal received\n");
+		ft_printf("Stop signal received\n");
 }
 
 int	main(void)
@@ -29,7 +29,7 @@ int	main(void)
 	sa.sa_handler = &ft_stop;
 	sigaction(SIGINT, &sa, NULL);
 	result = getpid();
-	printf("%d\n", result);
+	ft_printf("%d\n", result);
 	while (1)
 	{
 		pause();
