@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:49:44 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/24 16:54:10 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:37:58 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,15 @@ static void	bit_converter(unsigned char c, int pid)
 	while (byte != 0)
 	{
 		if ((c & byte) == 0)
+		{
 			sentinel = kill(pid, SIGUSR1);
+			ft_printf("Bit equal 0\n");
+		}
 		else if ((c & byte) != 0)
+		{
 			sentinel = kill(pid, SIGUSR2);
+			ft_printf("Bit equal 1\n");
+		}
 		if (sentinel == -1)
 			invalid_pid();
 		byte >>= 1;
