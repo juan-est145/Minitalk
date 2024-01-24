@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:49:44 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/24 15:26:56 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:54:10 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,13 @@ static void	bit_converter(unsigned char c, int pid)
 	while (byte != 0)
 	{
 		if ((c & byte) == 0)
-		{
 			sentinel = kill(pid, SIGUSR1);
-			if (sentinel == -1)
-				invalid_pid();
-		}
 		else if ((c & byte) != 0)
-		{
 			sentinel = kill(pid, SIGUSR2);
-			if (sentinel == -1)
-				invalid_pid();
-		}
+		if (sentinel == -1)
+			invalid_pid();
 		byte >>= 1;
+		sleep(1);
 	}
 }
 
@@ -52,16 +47,18 @@ int	main(int argc, char *argv[])
 
 	i = 0;
 	pid = 0;
-	if (argc == 3)
+	if (argc != 3)
 	{
-		pid = ft_atoi(argv[1]);
-		if (pid == 0)
-			invalid_pid();
-		while (argv[2][i] != '\0')
-		{
-			bit_converter(argv[2][i], pid);
-			i++;
-		}
+		ft_printf("Incorrect number of arguments, need two in total\n");
+		exit(1);
+	}
+	pid = ft_atoi(argv[1]);
+	if (pid == 0)
+		invalid_pid();
+	while (argv[2][i] != '\0')
+	{
+		bit_converter(argv[2][i], pid);
+		i++;
 	}
 	return (0);
 }

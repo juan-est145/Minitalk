@@ -6,17 +6,38 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/24 16:06:44 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:19:48 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
 #include "libft/libft.h"
+#include "minitalk.h"
 
-void	ft_stop(int signal)
+// SIGUSR1 means that the bit is 0 and SIGUSR2 means that the bit is 1
+
+void	ft_signal_handler(int signal)
 {
-	if (signal == SIGINT)
-		ft_printf("Stop signal received\n");
+	static unsigned int		counter = 0;
+	static int				bits = 128;
+	static unsigned char	letter = 0;
+
+	if (counter == 8)
+	{
+		counter = 0;
+		letter = 0;
+		write(1, &letter, 1);
+	}
+	if (signal == SIGUSR1)
+	{
+		ft_printf("%c", letter); //ERASE LATER
+		counter++;
+	}
+	else if (signal == SIGUSR2)
+	{
+		letter = (bits >> counter) ^ letter;
+		write(1, &letter, 1); //ERASE LATER
+		counter++;
+	}
 }
 
 int	main(void)
@@ -25,23 +46,26 @@ int	main(void)
 	int					result;
 
 	sigemptyset(&sa.sa_mask);
-	sigaddset(&sa.sa_mask, SIGINT);
-	sa.sa_handler = &ft_stop;
-	sigaction(SIGINT, &sa, NULL);
+	sigaddset(&sa.sa_mask, SIGUSR1);
+	sigaddset(&sa.sa_mask, SIGUSR2);
+	sa.sa_handler = &ft_signal_handler;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
 	result = getpid();
 	ft_printf("%d\n", result);
 	while (1)
 	{
 		pause();
-		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGUSR1, &sa, NULL);
+		sigaction(SIGUSR2, &sa, NULL);
 	}
 	return (0);
 }
 
-//Everytime that the signal has been handled by a custom handler, 
-//the default handler is restored. 
-//In order to avoid this, we need to redifine later in the 
-//code the custom signal handler with sigaction.
+// Everytime that the signal has been handled by a custom handler,
+// the default handler is restored.
+// In order to avoid this, we need to redifine later in the
+// code the custom signal handler with sigaction.
 
 /*
 sigaction(SIGINT, &sa, NULL);
