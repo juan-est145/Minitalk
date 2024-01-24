@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:49:44 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/24 19:09:30 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/24 19:57:09 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	bit_converter(unsigned char c, int pid)
 		if (sentinel == -1)
 			invalid_pid();
 		byte >>= 1;
-		usleep(500);
+		usleep(50);
 	}
 }
 

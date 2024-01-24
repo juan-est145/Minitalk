@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/24 18:48:51 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/24 19:48:29 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_signal_handler(int signal)
 	}
 	if (counter == 8)
 	{
-		ft_printf("%c", letter);
+		write(1, &letter, 1);
 		counter = 0;
 		letter = 0;
 	}
