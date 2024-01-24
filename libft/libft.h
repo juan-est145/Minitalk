@@ -6,13 +6,14 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 11:53:51 by juestrel          #+#    #+#             */
-/*   Updated: 2023/12/07 11:25:08 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:38:07 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <stdarg.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -31,13 +32,10 @@ int					ft_isprint(int c);
 size_t				ft_strlen(const char *s);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
-void				*ft_memcpy(void *dst, const void *src,
-						size_t n);
+void				*ft_memcpy(void *dst, const void *src, size_t n);
 void				*ft_memmove(void *dst, const void *src, size_t len);
-size_t				ft_strlcpy(char *dst, const char *src,
-						size_t dstsize);
-size_t				ft_strlcat(char *dst, const char *src,
-						size_t dstsize);
+size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
+size_t				ft_strlcat(char *dst, const char *src, size_t dstsize);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 char				*ft_strchr(const char *s, int c);
@@ -71,4 +69,15 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 						void (*del)(void *));
+int					ft_printf(char const *string, ...);
+int					ft_print_char(unsigned int arg, unsigned int *i);
+void				ft_put_uns_char_fd(unsigned char c, int fd);
+int					ft_print_string(char *string, unsigned int *i);
+int					ft_print_base10(int number, unsigned int *i);
+int					ft_print_lower_hex(unsigned int hexa, unsigned int *i);
+int					ft_print_upper_hex(unsigned int hexa, unsigned int *i);
+int					ft_print_uns_base10(unsigned int number, unsigned int *i);
+char				*ft_itoa_uns(unsigned int n);
+int					ft_print_percentage(char c, unsigned int *i);
+int					ft_print_ptr(void *decimal_ptr, unsigned int *i);
 #endif

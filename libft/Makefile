@@ -34,10 +34,7 @@ ft_strtrim.c\
 ft_substr.c\
 ft_tolower.c\
 ft_toupper.c\
-
-OBJS = $(SCRS:.c=.o)
-
-SCRS_BONUS = ft_lstnew_bonus.c\
+ft_lstnew_bonus.c\
 ft_lstadd_front_bonus.c\
 ft_lstsize_bonus.c\
 ft_lstlast_bonus.c\
@@ -46,8 +43,19 @@ ft_lstdelone_bonus.c\
 ft_lstclear_bonus.c\
 ft_lstiter_bonus.c\
 ft_lstmap_bonus.c\
+ft_print_base10.c\
+ft_print_char.c\
+ft_print_string.c\
+ft_printf.c\
+ft_put_uns_char_fd.c\
+ft_print_lower_hex.c\
+ft_print_upper_hex.c\
+ft_print_uns_base10.c\
+ft_itoa_uns.c\
+ft_print_percentage.c\
+ft_print_ptr.c\
 
-OBJS_BONUS = $(SCRS_BONUS:.c=.o)
+OBJS = $(SCRS:.c=.o)
 
 RM = rm -f
 
@@ -64,11 +72,8 @@ all: $(NAME)
 $(NAME): $(OBJS) $(HEADER)
 	$(STATIC_LIB) $(NAME) $(OBJS)
 
-bonus: $(OBJS) $(OBJS_BONUS) $(NAME)
-	$(STATIC_LIB) $(NAME) $(OBJS) $(OBJS_BONUS)
-
 clean:
-	$(RM) $(OBJS) $(OBJS_BONUS)
+	$(RM) $(OBJS)
 
 fclean: clean
 	$(RM) $(NAME)
@@ -76,4 +81,4 @@ fclean: clean
 re: fclean
 	$(MAKE) all
 
-.Phony: all clean fclean re bonus
+.Phony: all clean fclean re 
