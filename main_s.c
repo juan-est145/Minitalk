@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/24 17:42:37 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:51:13 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,8 @@ void	ft_signal_handler(int signal)
 {
 	static unsigned int		counter = 0;
 	static int				bits = 128;
-	static unsigned char	letter = 0;
+	static unsigned char	letter = '\0';
 
-	if (counter == 8)
-	{
-		counter = 0;
-		letter = 0;
-		ft_printf("%c\n", letter);
-	}
 	if (signal == SIGUSR1)
 	{
 		ft_printf("Bit 0 received\n");
@@ -37,6 +31,12 @@ void	ft_signal_handler(int signal)
 		ft_printf("Bit 1 received\n");
 		letter = (bits >> counter) ^ letter;
 		counter++;
+	}
+	if (counter == 8)
+	{
+		counter = 0;
+		letter = 0;
+		ft_printf("Aquí iría el caracter si esto funcionara\n", letter);
 	}
 }
 
