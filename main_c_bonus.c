@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:49:44 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/25 15:26:05 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:34:54 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,9 @@ static void	bit_converter(unsigned char c, int pid)
 {
 	int					byte;
 	int					sentinel;
-	struct sigaction	sa;
 
-	sigemptyset(&sa.sa_mask);
-	sigaddset(&sa.sa_mask, SIGUSR1);
-	sigaddset(&sa.sa_mask, SIGUSR2);
-	sa.sa_handler = &ft_signal_handler;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
+	signal(SIGUSR1, ft_signal_handler);
+	signal(SIGUSR2, ft_signal_handler);
 	byte = 128;
 	while (byte != 0)
 	{
@@ -57,8 +52,7 @@ static void	bit_converter(unsigned char c, int pid)
 		byte >>= 1;
 		while (g_signal_received != 1)
 		{
-			sigaction(SIGUSR1, &sa, NULL);
-			sigaction(SIGUSR2, &sa, NULL);
+			usleep(1);
 		}
 		g_signal_received = 0;
 		usleep(50);
