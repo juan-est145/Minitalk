@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/25 14:22:10 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:47:34 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ static void	print_char(unsigned char *letter, unsigned int *ctr)
 	*letter = 0;
 }
 
-static void	error_in_signal(int sentinel)
+static void	error_in_signal(int sentinel, int pid)
 {
 	if (sentinel < 0)
 	{
 		ft_printf(("Error, could not send kill signal to PID, exiting"));
+		kill(pid, SIGUSR2);
 		exit(1);
 	}
 }
@@ -52,7 +53,7 @@ static void	ft_signal_handler(int signal, siginfo_t *info, void *context)
 		counter++;
 		sentinel = kill(pid, SIGUSR1);
 		//ft_printf("Value of sentinel: %d\n", sentinel); //Borrar luego
-		error_in_signal(sentinel);
+		error_in_signal(sentinel, pid);
 	}
 	else if (signal == SIGUSR2)
 	{
@@ -60,7 +61,7 @@ static void	ft_signal_handler(int signal, siginfo_t *info, void *context)
 		counter++;
 		sentinel = kill(pid, SIGUSR1);
 		//ft_printf("Value of sentinel: %d\n", sentinel); //Borrar luego
-		error_in_signal(sentinel);
+		error_in_signal(sentinel, pid);
 	}
 	if (counter == 8)
 		print_char(&letter, &counter);
