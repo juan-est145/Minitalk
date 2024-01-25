@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_c.c                                           :+:      :+:    :+:   */
+/*   main_c_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:49:44 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/24 19:57:09 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:24:21 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 #include "minitalk.h"
 
 // SIGUSR1 means that the bit is 0 and SIGUSR2 means that the bit is 1
+
+static void	ft_signal_handler(int signum)
+{
+	/*if (signum == SIGUSR1)
+		ft_printf("Server received the signal\n");*/
+	if (signum == SIGUSR2)
+	{
+		ft_printf("Error in sending msg, exiting\n");
+		exit(1);
+	}		
+}
 
 static void	invalid_pid(void)
 {
@@ -36,15 +47,25 @@ static void	bit_converter(unsigned char c, int pid)
 		if (sentinel == -1)
 			invalid_pid();
 		byte >>= 1;
-		usleep(50);
+		pause();
+		//usleep(50);
 	}
 }
 
 int	main(int argc, char *argv[])
 {
-	unsigned int	i;
-	int				pid;
+	unsigned int		i;
+	int					pid;
+	/*struct sigaction	sa;
 
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGUSR1);
+	sigaddset(&sa.sa_mask, SIGUSR2);
+	sa.sa_handler = &ft_signal_handler;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);*/
+	signal(SIGUSR1, ft_signal_handler);
+	signal(SIGUSR2, ft_signal_handler);
 	i = 0;
 	pid = 0;
 	if (argc != 3)
@@ -60,5 +81,11 @@ int	main(int argc, char *argv[])
 		bit_converter(argv[2][i], pid);
 		i++;
 	}
+	/*while (1)
+	{
+		pause();
+		sigaction(SIGUSR1, &sa, NULL);
+		//sigaction(SIGUSR2, &sa, NULL);
+	}*/
 	return (0);
 }

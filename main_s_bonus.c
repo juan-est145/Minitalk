@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/25 13:13:17 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:22:10 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	print_char(unsigned char *letter, unsigned int *ctr)
 
 static void	error_in_signal(int sentinel)
 {
-	if (sentinel <= 0)
+	if (sentinel < 0)
 	{
 		ft_printf(("Error, could not send kill signal to PID, exiting"));
 		exit(1);
@@ -37,20 +37,29 @@ static void	ft_signal_handler(int signal, siginfo_t *info, void *context)
 	static int				bits = 128;
 	static unsigned char	letter = '\0';
 	int						sentinel;
+	static int				pid = 0; //Might need to erase later
 
 	(void)context;
+	if (info->si_pid)
+	{
+		pid = info->si_pid;
+		//ft_printf("PID is %d\n", pid); //Borrar luego
+	}
+		
 	sentinel = 0;
 	if (signal == SIGUSR1)
 	{
 		counter++;
-		sentinel = kill(info->si_pid, SIGUSR1);
+		sentinel = kill(pid, SIGUSR1);
+		//ft_printf("Value of sentinel: %d\n", sentinel); //Borrar luego
 		error_in_signal(sentinel);
 	}
 	else if (signal == SIGUSR2)
 	{
 		letter = (bits >> counter) ^ letter;
 		counter++;
-		sentinel = kill(info->si_pid, SIGUSR1);
+		sentinel = kill(pid, SIGUSR1);
+		//ft_printf("Value of sentinel: %d\n", sentinel); //Borrar luego
 		error_in_signal(sentinel);
 	}
 	if (counter == 8)
