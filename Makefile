@@ -3,8 +3,8 @@ LIBFT_PATH = libft
 NAME = server
 NAME_CLIENT = client
 
-NAME_BONUS= server
-NAME_CLIENT_BONUS = client
+NAME_BONUS= server_bonus
+NAME_CLIENT_BONUS = client_bonus
 
 SCRS_SERVER = main_s.c
 OBJS_SERVER = $(SCRS_SERVER:.c=.o)
@@ -43,7 +43,7 @@ clean:
 
 fclean: clean
 	$(MAKE) fclean -C $(LIBFT_PATH)
-	$(RM) $(NAME) $(NAME_CLIENT)
+	$(RM) $(NAME) $(NAME_CLIENT) $(NAME_BONUS) $(NAME_CLIENT_BONUS)
 
 re: fclean
 	$(MAKE) all
