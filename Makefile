@@ -9,6 +9,12 @@ OBJS_SERVER = $(SCRS_SERVER:.c=.o)
 SCRS_CLIENT = main_c.c
 OBJS_CLIENT = $(SCRS_CLIENT:.c=.o)
 
+SCRS_SERVER_BONUS = main_s_bonus.c
+OBJS_SERVER_BONUS = $(SCRS_SERVER_BONUS:.c=.o)
+
+SCRS_CLIENT_BONUS = main_c_bonus.c
+OBJS_CLIENT_BONUS = $(SCRS_CLIENT_BONUS:.c=.o)
+
 HEADER = minitalk.h
 
 COMPILER = CC
@@ -30,7 +36,7 @@ $(NAME_CLIENT): $(OBJS_CLIENT) $(HEADER)
 
 clean:
 	$(MAKE) clean -C $(LIBFT_PATH)
-	$(RM) $(OBJS_CLIENT) $(OBJS_SERVER)
+	$(RM) $(OBJS_CLIENT) $(OBJS_SERVER) $(OBJS_CLIENT_BONUS) $(OBJS_SERVER_BONUS)
 
 fclean: clean
 	$(MAKE) fclean -C $(LIBFT_PATH)
@@ -38,3 +44,7 @@ fclean: clean
 
 re: fclean
 	$(MAKE) all
+
+bonus: make-library $(OBJS_SERVER_BONUS) $(OBJS_CLIENT_BONUS) $(HEADER)
+	$(COMPILER) $(CFLAGS) $(LIBRARY_FLAG) $(NAME) $(OBJS_SERVER_BONUS)
+	$(COMPILER) $(CFLAGS) $(LIBRARY_FLAG) $(NAME_CLIENT) $(OBJS_CLIENT_BONUS)
