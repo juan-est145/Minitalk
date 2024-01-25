@@ -12,7 +12,7 @@ OBJS_CLIENT = $(SCRS_CLIENT:.c=.o)
 HEADER = minitalk.h
 
 COMPILER = CC
-FLAGS= -Wall -Werror -Wextra
+CFLAGS= -Wall -Werror -Wextra
 LIBRARY_FLAG = -Llibft -lft -o
 
 RM = rm -rf
@@ -23,10 +23,10 @@ make-library:
 	$(MAKE) -C $(LIBFT_PATH)
 
 $(NAME): $(OBJS_SERVER) $(HEADER)
-	$(COMPILER) $(FLAGS) $(LIBRARY_FLAG) $(NAME) $(OBJS_SERVER)
+	$(COMPILER) $(CFLAGS) $(LIBRARY_FLAG) $(NAME) $(OBJS_SERVER)
 
 $(NAME_CLIENT): $(OBJS_CLIENT) $(HEADER)
-	$(COMPILER) $(FLAGS) $(LIBRARY_FLAG) $(NAME_CLIENT) $(OBJS_CLIENT)
+	$(COMPILER) $(CFLAGS) $(LIBRARY_FLAG) $(NAME_CLIENT) $(OBJS_CLIENT)
 
 clean:
 	$(MAKE) clean -C $(LIBFT_PATH)
