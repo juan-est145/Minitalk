@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/24 19:48:29 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:53:15 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 // SIGUSR1 means that the bit is 0 and SIGUSR2 means that the bit is 1
 
-void	ft_signal_handler(int signal)
+static void	ft_signal_handler(int signal)
 {
 	static unsigned int		counter = 0;
 	static int				bits = 128;

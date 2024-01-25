@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_s.c                                           :+:      :+:    :+:   */
+/*   main_s_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/24 19:48:29 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:13:17 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,46 @@
 
 // SIGUSR1 means that the bit is 0 and SIGUSR2 means that the bit is 1
 
-void	ft_signal_handler(int signal)
+static void	print_char(unsigned char *letter, unsigned int *ctr)
+{
+	write(1, letter, 1);
+	*ctr = 0;
+	*letter = 0;
+}
+
+static void	error_in_signal(int sentinel)
+{
+	if (sentinel <= 0)
+	{
+		ft_printf(("Error, could not send kill signal to PID, exiting"));
+		exit(1);
+	}
+}
+
+static void	ft_signal_handler(int signal, siginfo_t *info, void *context)
 {
 	static unsigned int		counter = 0;
 	static int				bits = 128;
 	static unsigned char	letter = '\0';
+	int						sentinel;
 
+	(void)context;
+	sentinel = 0;
 	if (signal == SIGUSR1)
 	{
 		counter++;
+		sentinel = kill(info->si_pid, SIGUSR1);
+		error_in_signal(sentinel);
 	}
 	else if (signal == SIGUSR2)
 	{
 		letter = (bits >> counter) ^ letter;
 		counter++;
+		sentinel = kill(info->si_pid, SIGUSR1);
+		error_in_signal(sentinel);
 	}
 	if (counter == 8)
-	{
-		write(1, &letter, 1);
-		counter = 0;
-		letter = 0;
-	}
+		print_char(&letter, &counter);
 }
 
 int	main(void)
@@ -46,7 +65,7 @@ int	main(void)
 	sigemptyset(&sa.sa_mask);
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
-	sa.sa_handler = &ft_signal_handler;
+	sa.sa_sigaction = &ft_signal_handler;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	result = getpid();
