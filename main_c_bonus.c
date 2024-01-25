@@ -6,25 +6,25 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:49:44 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/25 14:49:13 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:26:05 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "minitalk.h"
 
-int signal_received = 0;
+int			g_signal_received = 0;
 // SIGUSR1 means that the bit is 0 and SIGUSR2 means that the bit is 1
 
 static void	ft_signal_handler(int signum)
 {
 	if (signum == SIGUSR1)
-		signal_received = 1;
+		g_signal_received = 1;
 	if (signum == SIGUSR2)
 	{
 		ft_printf("Error from server, exiting\n");
 		exit(1);
-	}		
+	}
 }
 
 static void	invalid_pid(void)
@@ -35,8 +35,8 @@ static void	invalid_pid(void)
 
 static void	bit_converter(unsigned char c, int pid)
 {
-	int	byte;
-	int	sentinel;
+	int					byte;
+	int					sentinel;
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
@@ -45,7 +45,6 @@ static void	bit_converter(unsigned char c, int pid)
 	sa.sa_handler = &ft_signal_handler;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-
 	byte = 128;
 	while (byte != 0)
 	{
@@ -56,24 +55,21 @@ static void	bit_converter(unsigned char c, int pid)
 		if (sentinel == -1)
 			invalid_pid();
 		byte >>= 1;
-		while (signal_received != 1)
+		while (g_signal_received != 1)
 		{
-			//pause();
 			sigaction(SIGUSR1, &sa, NULL);
 			sigaction(SIGUSR2, &sa, NULL);
 		}
-		signal_received = 0;
-		usleep(100);
+		g_signal_received = 0;
+		usleep(50);
 	}
 }
 
 int	main(int argc, char *argv[])
 {
-	unsigned int		i;
-	int					pid;
-	
-	//signal(SIGUSR1, ft_signal_handler);
-	//signal(SIGUSR2, ft_signal_handler);
+	unsigned int	i;
+	int				pid;
+
 	i = 0;
 	pid = 0;
 	if (argc != 3)
@@ -89,11 +85,5 @@ int	main(int argc, char *argv[])
 		bit_converter(argv[2][i], pid);
 		i++;
 	}
-	/*while (1)
-	{
-		pause();
-		sigaction(SIGUSR1, &sa, NULL);
-		//sigaction(SIGUSR2, &sa, NULL);
-	}*/
 	return (0);
 }

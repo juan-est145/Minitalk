@@ -6,7 +6,7 @@
 /*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/01/25 14:47:34 by juestrel         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:25:20 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,16 @@ static void	ft_signal_handler(int signal, siginfo_t *info, void *context)
 	static int				bits = 128;
 	static unsigned char	letter = '\0';
 	int						sentinel;
-	static int				pid = 0; //Might need to erase later
+	static int				pid = 0;
 
 	(void)context;
 	if (info->si_pid)
-	{
 		pid = info->si_pid;
-		//ft_printf("PID is %d\n", pid); //Borrar luego
-	}
-		
 	sentinel = 0;
 	if (signal == SIGUSR1)
 	{
 		counter++;
 		sentinel = kill(pid, SIGUSR1);
-		//ft_printf("Value of sentinel: %d\n", sentinel); //Borrar luego
 		error_in_signal(sentinel, pid);
 	}
 	else if (signal == SIGUSR2)
@@ -60,7 +55,6 @@ static void	ft_signal_handler(int signal, siginfo_t *info, void *context)
 		letter = (bits >> counter) ^ letter;
 		counter++;
 		sentinel = kill(pid, SIGUSR1);
-		//ft_printf("Value of sentinel: %d\n", sentinel); //Borrar luego
 		error_in_signal(sentinel, pid);
 	}
 	if (counter == 8)
