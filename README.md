@@ -1,0 +1,3 @@
+A repository containing the minitalk project of 42 Malaga. The aim of this project is to have two different programs called server and client. This client program will recieve the PID of the server program and a string as arguments, and must use signals to send the string to the server so that the server prints the message to the standard output. If you are a fellow student at 42, DO NOT COPY ANYTHING FROM THIS REPOSITORY THAT YOU DO NOT UNDERSTAND, use it to learn instead.
+
+P.D: The server must be executed first and this project has only been checked to work on MacOS, I give no guarantees that it manages to compile in Linux.
