@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main_s.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: juan-est145 <juan-est145@student.42.fr>    +#+  +:+       +#+        */
+/*   By: juestrel <juestrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 13:30:01 by juan-est145       #+#    #+#             */
-/*   Updated: 2024/02/22 00:25:52 by juan-est145      ###   ########.fr       */
+/*   Updated: 2024/02/22 14:06:14 by juestrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "minitalk.h"
-/*#ifndef _POSIX_C_SOURCE
-# define _POSIX_C_SOURCE 1
-#endif*/
 
 // SIGUSR1 means that the bit is 0 and SIGUSR2 means that the bit is 1
 
